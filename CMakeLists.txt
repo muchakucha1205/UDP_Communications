@@ -13,12 +13,12 @@ set(CMAKE_CXX_FLAGS "-Wall -Wfatal-errors -Wundef")
 # set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
 # Set the project name and language.
-
-add_executable(tx send.cpp )
-add_executable(rx receive.cpp )
+add_executable(tx tx.cpp )
+add_executable(rx rx.cpp )
 
 ## target link
-
+target_link_libraries(tx ws2_32.dll)
+target_link_libraries(rx ws2_32.dll)
 # add_subdirectory(common)
 # target_link_libraries(${PROJECT_NAME} common)
 # add_subdirectory(func1)
@@ -39,4 +39,9 @@ add_executable(rx receive.cpp )
 # add_compile_definitions(ALL_DEBUG_ENABLE)
 ## targetのみ
 
-# target_compile_definitions(${PROJECT_NAME} PUBLIC DEBUG_ENABLE)
+target_compile_definitions(tx PUBLIC DEBUG_ENABLE)
+target_compile_definitions(tx PUBLIC IP_ADDRESS="127.0.0.1")
+target_compile_definitions(tx PUBLIC PORT_NUMBER=50008)
+target_compile_definitions(rx PUBLIC DEBUG_ENABLE)
+target_compile_definitions(rx PUBLIC IP_ADDRESS="127.0.0.1")
+target_compile_definitions(rx PUBLIC PORT_NUMBER=50008)
