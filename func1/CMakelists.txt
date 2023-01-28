@@ -1,0 +1,24 @@
+message("---------------Debug Message---------------")
+message("func1")
+
+message(${CMAKE_CURRENT_SOURCE_DIR}/src)
+message("target liks")
+add_library(func1
+	STATIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/udp.cpp
+)
+
+message("target include")
+target_include_directories(
+	func1
+	PRIVATE
+	${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+#message("target liks")
+#target_link_libraries(func1 common)
+
+message("add #define")
+target_compile_definitions(func1 PRIVATE DEBUG_ENABLE)
+
+message("---------------Debug Message---------------")

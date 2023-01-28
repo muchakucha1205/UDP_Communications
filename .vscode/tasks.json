@@ -1,0 +1,121 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "windows": {
+        "options": {
+            "shell": {
+                "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+                "args": [
+                    "-ExecutionPolicy",
+                    "Bypass",
+                    "-Command"
+                ]
+            }
+        }
+    },
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: build project on Windows (debug)",
+            "command": "doDebugBuild.bat",
+            "args": [],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "detail": "Build project with debug configuration."
+        },
+        {
+            "type": "shell",
+            "label": "C/C++: cmake sequence1",
+            "command": "cmake",
+            "args": [
+                "-S",
+                ".",
+                "-B",
+                "build",
+                "-G",
+                "MinGW Makefiles",
+                "-DCMAKE_BUILD_TYPE=Debug"
+                //"-DCMAKE_BUILD_TYPE=Release"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "silent"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "C/C++: cmake sequence2",
+            "command": "cmake",
+            "args": [
+                "--build",
+                "build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "presentation": {
+                "reveal": "silent"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "C/C++: cmake",
+            "command": "echo",
+            "args": [
+                "finish build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Build project with debug configuration.",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "C/C++: cmake sequence1",
+                "C/C++: cmake sequence2"
+            ],
+            "presentation": {
+                "reveal": "silent"
+            }
+        },
+        {
+            "type": "shell",
+            "label": "cmake clean",
+            "command": "Remove-Item",
+            "args": [
+                "./build",
+                "-Recurse","-Force"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "problemMatcher": []
+        }
+    ]
+}
